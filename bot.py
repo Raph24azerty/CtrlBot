@@ -1,5 +1,5 @@
 import discord
-import os
+from os import getenv
 from dotenv import load_dotenv
 from discord import app_commands
 from discord.ext import commands
@@ -175,4 +175,4 @@ async def admin_error(interaction: discord.Interaction, error):
 
 keep_alive()
 # ✅ Lancement du bot
-bot.run(os.getenv('DISCORD_TOKEN'))
+bot.run(getenv('DISCORD_TOKEN'))
