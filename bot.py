@@ -268,9 +268,9 @@ async def removecoins(interaction: discord.Interaction, member: discord.Member, 
         ephemeral=True
     )
 
-@bot.tree.command(name="definecoins", description="Permet de définir le nombre de CtrlCoins d'un membre. Accès restreint aux administrateurs.")
+@bot.tree.command(name="defcoins", description="Permet de définir le nombre de CtrlCoins d'un membre. Accès restreint aux administrateurs.")
 @app_commands.check(is_admin)
-async def definecoins(interaction: discord.Interaction, member: discord.Member, ctrlcoins: int):
+async def defcoins(interaction: discord.Interaction, member: discord.Member, ctrlcoins: int):
     user_id = str(member.id)
     all_data = get_all_data()
 
@@ -282,6 +282,12 @@ async def definecoins(interaction: discord.Interaction, member: discord.Member, 
     save_data(all_data)
 
     await interaction.response.send_message(f"{member.mention} a maintenant {all_data[user_id]['money']} CtrlCoins.", ephemeral=True)
+
+@bot.tree.command(name="seasonreset", description="Ne pas missclick !!! Accès restreint aux administrateurs.")
+@app_commands.check(is_admin)
+async def seasonreset(interaction: discord.Interaction):
+    data = get_all_data()
+    data.clear()
 
 # ✅ Sync des slash commands
 @bot.event
@@ -432,7 +438,7 @@ async def unban(interaction: discord.Interaction, user_id: str):
 
 @bot.tree.command(name="teamate", description="Permet de trouver un coéquipier sur le jeu de votre choix.")
 async def teamate(interaction: discord.Interaction, game: str):
-    file = discord.File("assets/manetteBotDiscord.jpg", filename="manette.jpg")
+    file = discord.File("./manetteBotDiscord.jpg", filename="manette.jpg")
     embed = discord.Embed(
         title="Demande de teamate !",
         color=discord.Color.green(),
