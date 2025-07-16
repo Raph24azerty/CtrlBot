@@ -580,7 +580,7 @@ async def event(interaction: discord.Interaction, participants: int, nom: str, c
     embed.add_field(name="Nom", value=nom)
     embed.add_field(name="Catégorie", value=categorie)
     embed.add_field(name="Participants Max", value=str(participants))
-    view = EventButton(participantsMax=participants)
+    view = EventButton(participantsMax=participants, name=nom)
     await interaction.response.send_message(embed=embed, view=view)
 
 # @bot.tree.command(name="clear", description="Permet de clear le channel dans lequel la commande est lancée. Accès restreint aux administrateurs.")
