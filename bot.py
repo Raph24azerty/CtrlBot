@@ -572,10 +572,10 @@ class EventButton(discord.ui.View):
         if len(self.participants) >= self.participantsMax:
             button.disabled = True
             await interaction.message.edit(content="L'event est au complet, mais tkt y en aura d'autres.", view=self)
-            modChannel = interaction.guild.get_channel(1383859853293916221)
-            modChannel.send(f"L'event {self.name} est au complet, voici les participants")
+            modChannel = await interaction.guild.get_channel(1383859853293916221)
+            await modChannel.send(f"L'event {self.name} est au complet, voici les participants")
             for participant in self.participants:
-                modChannel.send(participant.display_name)
+                await modChannel.send(participant.display_name)
 
         await interaction.response.send_message("Vous participez maintenant à l'event.", ephemeral=True)
 
