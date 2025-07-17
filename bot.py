@@ -555,8 +555,6 @@ class EventButton(discord.ui.View):
 
     @discord.ui.button(label="Participer 🎉", style=discord.ButtonStyle.primary)
     async def participate(self, interaction: discord.Interaction, button: discord.Button):
-        button.disabled = True
-
         user = interaction.user
 
         if user in self.participants:
@@ -564,7 +562,8 @@ class EventButton(discord.ui.View):
             return
         
         if len(self.participants) >= self.participantsMax:
-            await interaction.response.send_message("L'event est au complet, désolé.", ephemeral=True)
+            button.disabled = True
+            await interaction.message.edit(content="L'event est au complet, désolé.", view=self, ephemeral=True)
             return
 
         self.participants.append(user)
@@ -572,7 +571,7 @@ class EventButton(discord.ui.View):
         if len(self.participants) >= self.participantsMax:
             button.disabled = True
             await interaction.message.edit(content="L'event est au complet, mais tkt y en aura d'autres.", view=self)
-            modChannel = await interaction.guild.get_channel(1383859853293916221)
+            modChannel = interaction.guild.get_channel(1383859853293916221)
             await modChannel.send(f"L'event {self.name} est au complet, voici les participants")
             for participant in self.participants:
                 await modChannel.send(participant.display_name)
